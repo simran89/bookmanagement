@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Add Book</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+<link rel ="stylesheet" href="StyleSheet.css"/>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+   <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+
+ <script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+   <script>
+var xmlHttp;
+
+ function doUserCheckAjaxCall()
+ {
+	 	 xmlHttp=GetXmlHttpObject(); // 1) GET XHTTP object
+		 var user_id=document.getElementById("BookTitle").value;
+	// 2) get html form element
+	
+		 var url="http://localhost:8080/LibraryManagement/AddBook";  
+		 xmlHttp.open("POST",url,true); // 3) Configure HTTP server request
+		 xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");// 4) set header values
+	
+		 xmlHttp.send("BookTitle=" + user_id); // 5) post data
+
+		 xmlHttp.onreadystatechange =validateUIDCheckResponse;
+ }			 
+		
+
+ function validateUIDCheckResponse() 
+ {
+	 if (xmlHttp.readyState == 4) 
+	 {
+		 	if(xmlHttp.status == 200) 
+		 	{
+		 	var response = xmlHttp.responseText; 
+		 	alert(response);
+		 	//	var resParse = JSON.parse(response);
+		 		
+		 		/* if(resParse.result == "success")
+		 			{
+		 			document.getElementById("ajaxresponsefield").innerHTML ="user already taken";
+		 				alert("userid is already taken please choose some other id");
+		 			} */
+		 			
+		 			if(response == "Success")
+		 				{
+		 				document.getElementById("ajaxresponsefield").innerHTML ="user already taken";
+		 				
+		 				}
+		 			else
+		 				{
+		 				document.getElementById("ajaxresponsefield").innerHTML =" not valids  ";
+		 				}
+		 		    
+		 	}
+		 	else 
+		 	{ 
+		 		alert("ajax call failed");
+		 			
+		 	}
+	}
+} 
+ function GetXmlHttpObject()
+ { 
+ 	var xmlHttp=null;
+ try { // create xhttp object in following browser Firefox, Opera 8.0+, Safari
+	 xmlHttp=new XMLHttpRequest(); }
+catch (e)
+  {// create xhttp object in Internet Explorer browser 
+ 	 try{ 	xmlHttp=new ActiveXObject("Msxml2.XMLHTTP"); 	  }
+ 	 catch (e) { 	xmlHttp=new ActiveXObject("Microsoft.XMLHTTP"); 	  }
+  }	return xmlHttp;
+ }
+
+ </script> 
+</head>
+<body>
+
+<div class= "outer">
+    
+  
+    <div class= "inner1top" id ="Header">
+        
+        <center>
+<h2>Welcome to our Public Library</h2>
+</center>
+    </div>
+    <div class ="middle">
+        <form action = "AddBook" method ="post"><br/><br/><br/><br/>
+Enter Book ID<br></br><input type = "text" value ="BookID"  id ="BookID" name ="BookID" /><br></br>
+Book Title<br></br><input type = "text" value ="BookTitle" id ="BookTitle" name ="BookTitle" onblur="doUserCheckAjaxCall()"/><br></br>
+<center><div id= "ajaxresponsefield"> </div></center>
+AuthorName<br></br><input type = "text" value ="AuthorName" name="AuthorName"/><br></br>
+publisher<br></br><input type = "text" value ="publisher" name ="publisher"/><br></br>
+Edition<br></br><input type = "text" value ="Edition" name ="Edition"/><br></br>
+InvoiceNo<br></br><input type = "text" value ="InvoiceNo" name ="InvoiceNo"/><br></br>
+invoiceDate<br></br><input type = "text" value ="invoiceDate" name ="invoiceDate"/><br></br>
+cost<br></br><input type = "text" value ="cost" name ="cost"/><br></br>
+<input type = "submit" class ="button" value ="Add Book" name="action"/><br></br>
+</form>
+        
+    </div>
+    <div class= "innerBottom">
+        this is bottom
+    </div>
+         
+    
+</div>
+
+
+
+</body>
+</html>

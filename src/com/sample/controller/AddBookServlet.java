@@ -112,6 +112,7 @@ public class AddBookServlet extends HttpServlet{
 		
 		if(action.equalsIgnoreCase("Add Book"))
 		{
+			res.getWriter().print("success");
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/DiaplayBooks.jsp");
 		dispatcher.forward( req, res);
 		
